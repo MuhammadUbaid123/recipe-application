@@ -3,4 +3,6 @@ export interface Recipe{
     title: string,
     image: string,
     imageType: string,
+    summary: string,
 }
+

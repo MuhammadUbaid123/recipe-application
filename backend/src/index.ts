@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 
+/* Search Recipes End point */
 app.get("/api/recipes/search", async (req, res): Promise<any> => {
 
     try {
@@ -22,6 +23,19 @@ app.get("/api/recipes/search", async (req, res): Promise<any> => {
         const result = await RecipeAPI.searchRecipes(searchTerm, page);
         return res.json(result)
     } catch (error) {
+        throw new Error("Some internal error!");
+    }
+})
+
+/* Get Recipe Summary End Point */
+app.get("/api/recipes/:recipeId/summary", async (req, res): Promise<any> => {
+    try {
+        const recipeId = parseInt(req.params.recipeId as string);
+        const result = await RecipeAPI.getRecipeSummary(recipeId);
+
+        return res.json(result);
+    } catch (error) {
+        console.info("Recipe summary endpoint error !-- ",error);
         throw new Error("Some internal error!");
     }
 })

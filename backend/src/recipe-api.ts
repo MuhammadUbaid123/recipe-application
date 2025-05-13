@@ -36,3 +36,26 @@ export const searchRecipes = async (searchTerm: string, page: number) => {
     }
     
 }
+
+/*
+* Now we're gonna fetch the recipe summary
+*/
+export const getRecipeSummary = async (recipeId: number) => {
+    try {
+        if(!apiKey){
+            throw new Error("No API key found");
+        }
+        let url = new URL(`https://api.spoonacular.com/recipes/${recipeId}/summary`);
+        const params = {
+            apiKey,
+        };
+
+        url.search = new URLSearchParams(params).toString();
+        const searchResponse = await fetch(url);
+
+        return searchResponse.json();
+    } catch (error) {
+        console.info(error);
+        throw new Error('There is some internal error!')
+    }
+}
